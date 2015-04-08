@@ -2,13 +2,13 @@ package com.mrjaffesclass.apcs.todolist;
 
 import com.mrjaffesclass.apcs.messenger.*;
 import java.util.ArrayList;
-
+import java.util.Date;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  * Unit test for the AppModel class
@@ -148,6 +148,33 @@ public class AppModelTest {
   @Test
   public void testMessages() {
     assertTrue("testMessages", true);
+  }
+  
+  /**
+   * Test of sortByDate of class AppModel
+   */
+  @Test
+  public void testSortByDate() {
+      ToDoItem earliestItem = new ToDoItem(-1, "02/21/2014", new Date(1392969600000L)), 
+              middleItem = new ToDoItem(-1, "03/20/2014", new Date(1395298800000L)),
+              latestItem = new ToDoItem(-1, "04/27/2015", new Date(1430118000000L));
+      addSampleItems(model);
+      //Test sort earliest first
+      model.putItem(earliestItem);
+      model.putItem(middleItem);
+      model.putItem(middleItem);
+      model.sortByDate(true);
+      assertEquals(earliestItem, testArrayList.remove(0));
+      assertEquals(middleItem, testArrayList.remove(0));
+      assertEquals(latestItem, testArrayList.remove(0));
+      //Now test sort Earliest Last
+      model.putItem(earliestItem);
+      model.putItem(middleItem);
+      model.putItem(middleItem);
+      model.sortByDate(false);
+      assertEquals(latestItem, testArrayList.remove(0));
+      assertEquals(middleItem, testArrayList.remove(0));
+      assertEquals(earliestItem, testArrayList.remove(0));
   }
   
   /**
